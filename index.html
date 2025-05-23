@@ -36,13 +36,8 @@
       100% { transform: translateY(-40px) translateX(20px); }
     }
 
-    .bubble:nth-child(odd) {
-      animation-duration: 12s;
-    }
-
-    .bubble:nth-child(even) {
-      animation-duration: 9s;
-    }
+    .bubble:nth-child(odd) { animation-duration: 12s; }
+    .bubble:nth-child(even) { animation-duration: 9s; }
 
     .profile-card {
       display: none;
@@ -139,87 +134,27 @@
     }
 
     @media screen and (max-width: 768px) {
-  .profile-card {
-    padding: 20px;
-    border-radius: 40px;
-  }
+      .profile-card { padding: 20px; border-radius: 40px; }
+      .profile-img { width: 140px; height: 140px; margin-top: -70px; }
+      .name { font-size: 28px; }
+      .role { font-size: 18px; }
+      .stat-number { font-size: 20px; }
+      .stat-label { font-size: 16px; }
+      .stats { flex-direction: column; align-items: center; }
+      input, button { width: 100%; font-size: 15px; }
+      #auth { width: 90%; padding: 20px; }
+    }
 
-  .profile-img {
-    width: 140px;
-    height: 140px;
-    margin-top: -70px;
-  }
-
-  .name {
-    font-size: 28px;
-  }
-
-  .role {
-    font-size: 18px;
-  }
-
-  .stat-number {
-    font-size: 20px;
-  }
-
-  .stat-label {
-    font-size: 16px;
-  }
-
-  .stats {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  input, button {
-    width: 100%;
-    font-size: 15px;
-  }
-
-  #auth {
-    width: 90%;
-    padding: 20px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .profile-img {
-    width: 110px;
-    height: 110px;
-    margin-top: -60px;
-  }
-
-  .name {
-    font-size: 22px;
-  }
-
-  .location {
-    font-size: 14px;
-  }
-
-  .role {
-    font-size: 16px;
-  }
-
-  .stat-number {
-    font-size: 18px;
-  }
-
-  .stat-label {
-    font-size: 14px;
-  }
-
-  .header-plus-bubles {
-    height: 200px;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-  }
-
-  .bubble {
-    opacity: 0.15;
-  }
-}
-
+    @media screen and (max-width: 480px) {
+      .profile-img { width: 110px; height: 110px; margin-top: -60px; }
+      .name { font-size: 22px; }
+      .location { font-size: 14px; }
+      .role { font-size: 16px; }
+      .stat-number { font-size: 18px; }
+      .stat-label { font-size: 14px; }
+      .header-plus-bubles { height: 200px; border-radius: 40px; }
+      .bubble { opacity: 0.15; }
+    }
   </style>
 </head>
 <body>
@@ -230,28 +165,30 @@
     <h2 id="auth-title">Login</h2>
     <input type="email" id="email" placeholder="Email" />
     <input type="password" id="password" placeholder="Password" />
+
+    <!-- Sign up only fields -->
+    <div id="signup-fields" style="display: none;">
+      <input type="text" id="username" placeholder="Username" />
+      <input type="text" id="job" placeholder="Job Title" />
+      <input type="number" id="friends" placeholder="Number of Friends" />
+      <input type="number" id="posts" placeholder="Number of Posts" />
+      <input type="number" id="projects" placeholder="Number of Projects" />
+      <input type="file" id="profile-pic" accept="image/*" />
+    </div>
+
     <button id="auth-button">Login</button>
     <div class="toggle" id="toggle-auth">Don't have an account? Sign up</div>
   </div>
 
   <div class="profile-card" id="profile-card">
     <img src="ProfileIMG.jpg" alt="Profile" class="profile-img" />
-    <div class="name">Mohamed Sameh</div>
+    <div class="name">Name</div>
     <div class="location">Omrania, Giza, Egypt</div>
-    <div class="role">Developer</div>
+    <div class="role">Job</div>
     <div class="stats">
-      <div>
-        <div class="stat-number">100</div>
-        <div class="stat-label">Friends</div>
-      </div>
-      <div>
-        <div class="stat-number">20</div>
-        <div class="stat-label">Posts</div>
-      </div>
-      <div>
-        <div class="stat-number">50</div>
-        <div class="stat-label">Projects</div>
-      </div>
+      <div><div class="stat-number">0</div><div class="stat-label">Friends</div></div>
+      <div><div class="stat-number">0</div><div class="stat-label">Posts</div></div>
+      <div><div class="stat-number">0</div><div class="stat-label">Projects</div></div>
     </div>
     <button onclick="logout()">Logout</button>
   </div>
@@ -260,13 +197,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.3/dist/umd/supabase.min.js"></script>
   <script>
     const supabase = window.supabase.createClient(
-      'https://vgnrdkuczsuyzrnfgoxd.supabase.co', // ⬅️ Replace this with your project URL
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnbnJka3VjenN1eXpybmZnb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwMDY2ODIsImV4cCI6MjA2MzU4MjY4Mn0.HzHLXZnACLwN0WuK7OmZCJmF2b1Wt863RtKmC9vRhF4' // ⬅️ Replace with your anon/public key
+      'https://vgnrdkuczsuyzrnfgoxd.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnbnJka3VjenN1eXpybmZnb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwMDY2ODIsImV4cCI6MjA2MzU4MjY4Mn0.HzHLXZnACLwN0WuK7OmZCJmF2b1Wt863RtKmC9vRhF4'
     );
 
     const authButton = document.getElementById("auth-button");
     const toggleAuth = document.getElementById("toggle-auth");
     const authTitle = document.getElementById("auth-title");
+    const signupFields = document.getElementById("signup-fields");
 
     let isLogin = true;
 
@@ -274,9 +212,8 @@
       isLogin = !isLogin;
       authTitle.innerText = isLogin ? "Login" : "Sign Up";
       authButton.innerText = isLogin ? "Login" : "Sign Up";
-      toggleAuth.innerText = isLogin
-        ? "Don't have an account? Sign up"
-        : "Already have an account? Login";
+      toggleAuth.innerText = isLogin ? "Don't have an account? Sign up" : "Already have an account? Login";
+      signupFields.style.display = isLogin ? "none" : "block";
     });
 
     authButton.addEventListener("click", async () => {
@@ -284,7 +221,7 @@
       const password = document.getElementById("password").value;
 
       if (!email || !password) {
-        alert("Please fill in both fields.");
+        alert("Please fill in email and password.");
         return;
       }
 
@@ -293,6 +230,32 @@
         response = await supabase.auth.signInWithPassword({ email, password });
       } else {
         response = await supabase.auth.signUp({ email, password });
+
+        if (!response.error) {
+          const userInfo = {
+            username: document.getElementById("username").value,
+            job: document.getElementById("job").value,
+            friends: document.getElementById("friends").value,
+            posts: document.getElementById("posts").value,
+            projects: document.getElementById("projects").value
+          };
+
+          const picInput = document.getElementById("profile-pic");
+          if (picInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              userInfo.profilePic = e.target.result;
+              localStorage.setItem("profileData", JSON.stringify(userInfo));
+              checkSession();
+            };
+            reader.readAsDataURL(picInput.files[0]);
+            return;
+          } else {
+            userInfo.profilePic = "ProfileIMG.jpg";
+          }
+
+          localStorage.setItem("profileData", JSON.stringify(userInfo));
+        }
       }
 
       if (response.error) {
@@ -308,6 +271,16 @@
       if (session) {
         document.getElementById("auth").style.display = "none";
         document.getElementById("profile-card").style.display = "block";
+
+        const data = JSON.parse(localStorage.getItem("profileData"));
+        if (data) {
+          document.querySelector(".name").innerText = data.username || "Name";
+          document.querySelector(".role").innerText = data.job || "Job";
+          document.querySelectorAll(".stat-number")[0].innerText = data.friends || "0";
+          document.querySelectorAll(".stat-number")[1].innerText = data.posts || "0";
+          document.querySelectorAll(".stat-number")[2].innerText = data.projects || "0";
+          document.querySelector(".profile-img").src = data.profilePic || "ProfileIMG.jpg";
+        }
       } else {
         document.getElementById("auth").style.display = "block";
         document.getElementById("profile-card").style.display = "none";
@@ -316,12 +289,12 @@
 
     async function logout() {
       await supabase.auth.signOut();
+      localStorage.removeItem("profileData");
       checkSession();
     }
 
     checkSession();
 
-    // Bubbles
     const container = document.querySelector(".header-plus-bubles");
     for (let i = 0; i < 12; i++) {
       const b = document.createElement("div");
@@ -335,6 +308,3 @@
   </script>
 </body>
 </html>
-
-
-
