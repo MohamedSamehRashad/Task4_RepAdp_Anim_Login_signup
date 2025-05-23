@@ -169,6 +169,7 @@
     <!-- Sign up only fields -->
     <div id="signup-fields" style="display: none;">
       <input type="text" id="username" placeholder="Username" />
+      <input type="text" id="location" placeholder="Location (e.g., Giza, Egypt)" />
       <input type="text" id="job" placeholder="Job Title" />
       <input type="number" id="friends" placeholder="Number of Friends" />
       <input type="number" id="posts" placeholder="Number of Posts" />
@@ -234,6 +235,7 @@
         if (!response.error) {
           const userInfo = {
             username: document.getElementById("username").value,
+            location: document.getElementById("location").value,
             job: document.getElementById("job").value,
             friends: document.getElementById("friends").value,
             posts: document.getElementById("posts").value,
@@ -276,6 +278,7 @@
         if (data) {
           document.querySelector(".name").innerText = data.username || "Name";
           document.querySelector(".role").innerText = data.job || "Job";
+          document.querySelector(".location").innerText = data.location || "Unknown Location";
           document.querySelectorAll(".stat-number")[0].innerText = data.friends || "0";
           document.querySelectorAll(".stat-number")[1].innerText = data.posts || "0";
           document.querySelectorAll(".stat-number")[2].innerText = data.projects || "0";
