@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated Profile with Auth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Merienda', cursive;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    .header-plus-bubles {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(to right, #f857a6, #ff5858);
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .bubble {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: float 10s infinite ease-in-out alternate;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-40px) translateX(20px); }
+    }
+
+    .bubble:nth-child(odd) {
+      animation-duration: 12s;
+    }
+
+    .bubble:nth-child(even) {
+      animation-duration: 9s;
+    }
+
+    .profile-card {
+      display: none;
+      position: relative;
+      top: -50px;
+      margin: 0 auto;
+      width: 90%;
+      max-width: 700px;
+      background: white;
+      border-radius: 60px;
+      box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+      text-align: center;
+      padding: 30px;
+    }
+
+    .profile-img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: -100px;
+      border: 5px solid white;
+    }
+
+    .name {
+      font-size: 42px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .location {
+      color: #888;
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    .role {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .stat-number {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .stat-label {
+      font-size: 18px;
+      color: #555;
+    }
+
+    #auth {
+      width: 100%;
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 20px;
+      background: #ffe3ec;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background-color: #f857a6;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .toggle {
+      margin-top: 10px;
+      cursor: pointer;
+      color: #f857a6;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 768px) {
+  .profile-card {
+    padding: 20px;
+    border-radius: 40px;
+  }
+
+  .profile-img {
+    width: 140px;
+    height: 140px;
+    margin-top: -70px;
+  }
+
+  .name {
+    font-size: 28px;
+  }
+
+  .role {
+    font-size: 18px;
+  }
+
+  .stat-number {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 16px;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input, button {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  #auth {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .profile-img {
+    width: 110px;
+    height: 110px;
+    margin-top: -60px;
+  }
+
+  .name {
+    font-size: 22px;
+  }
+
+  .location {
+    font-size: 14px;
+  }
+
+  .role {
+    font-size: 16px;
+  }
+
+  .stat-number {
+    font-size: 18px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+  }
+
+  .header-plus-bubles {
+    height: 200px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+
+  .bubble {
+    opacity: 0.15;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header-plus-bubles"></div>
+
+  <div id="auth">
+    <h2 id="auth-title">Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="auth-button">Login</button>
+    <div class="toggle" id="toggle-auth">Don't have an account? Sign up</div>
+  </div>
+
+  <div class="profile-card" id="profile-card">
+    <img src="ProfileIMG.jpg" alt="Profile" class="profile-img" />
+    <div class="name">Mohamed Sameh</div>
+    <div class="location">Omrania, Giza, Egypt</div>
+    <div class="role">Developer</div>
+    <div class="stats">
+      <div>
+        <div class="stat-number">100</div>
+        <div class="stat-label">Friends</div>
+      </div>
+      <div>
+        <div class="stat-number">20</div>
+        <div class="stat-label">Posts</div>
+      </div>
+      <div>
+        <div class="stat-number">50</div>
+        <div class="stat-label">Projects</div>
+      </div>
+    </div>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.42.3/dist/umd/supabase.min.js"></script>
+  <script>
+    const supabase = window.supabase.createClient(
+      'https://vgnrdkuczsuyzrnfgoxd.supabase.co', // ⬅️ Replace this with your project URL
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnbnJka3VjenN1eXpybmZnb3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwMDY2ODIsImV4cCI6MjA2MzU4MjY4Mn0.HzHLXZnACLwN0WuK7OmZCJmF2b1Wt863RtKmC9vRhF4' // ⬅️ Replace with your anon/public key
+    );
+
+    const authButton = document.getElementById("auth-button");
+    const toggleAuth = document.getElementById("toggle-auth");
+    const authTitle = document.getElementById("auth-title");
+
+    let isLogin = true;
+
+    toggleAuth.addEventListener("click", () => {
+      isLogin = !isLogin;
+      authTitle.innerText = isLogin ? "Login" : "Sign Up";
+      authButton.innerText = isLogin ? "Login" : "Sign Up";
+      toggleAuth.innerText = isLogin
+        ? "Don't have an account? Sign up"
+        : "Already have an account? Login";
+    });
+
+    authButton.addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        alert("Please fill in both fields.");
+        return;
+      }
+
+      let response;
+      if (isLogin) {
+        response = await supabase.auth.signInWithPassword({ email, password });
+      } else {
+        response = await supabase.auth.signUp({ email, password });
+      }
+
+      if (response.error) {
+        alert(response.error.message);
+      } else {
+        alert(isLogin ? "Login successful!" : "Signup successful. Check your email to confirm.");
+        checkSession();
+      }
+    });
+
+    async function checkSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        document.getElementById("auth").style.display = "none";
+        document.getElementById("profile-card").style.display = "block";
+      } else {
+        document.getElementById("auth").style.display = "block";
+        document.getElementById("profile-card").style.display = "none";
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      checkSession();
+    }
+
+    checkSession();
+
+    // Bubbles
+    const container = document.querySelector(".header-plus-bubles");
+    for (let i = 0; i < 12; i++) {
+      const b = document.createElement("div");
+      b.classList.add("bubble");
+      const size = Math.random() * 100 + 50;
+      b.style.width = b.style.height = `${size}px`;
+      b.style.top = `${Math.random() * 200}px`;
+      b.style.left = `${Math.random() * window.innerWidth}px`;
+      container.appendChild(b);
+    }
+  </script>
+</body>
+</html>
+
+
+
